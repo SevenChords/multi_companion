@@ -1,34 +1,8 @@
-import os
-
-DATA_PATHS_ = ['data',
-               'data/fk',
-               'data/fk/slots',
-               'data/fk/slots/888',
-               'data/fk/slots/circus',
-               'data/fk/slots/cogs',
-               'data/fk/slots/fish',
-               'data/fk/slots/ghost',
-               'data/fk/slots/gold',
-               'data/fk/slots/prog',
-               'data/fk/slots/space',
-               'data/fk/slots/trap',
-               'data/fk/slots/winds',
-               'data/fk/tables',
-               'data/fk/tables/baccarat',
-               'data/fk/tables/big6',
-               'data/fk/tables/bingo',
-               'data/fk/tables/blackjack',
-               'data/fk/tables/craps',
-               'data/fk/tables/poker',
-               'data/fk/tables/roulette',
-               'data/fk/tables/war',
-               'data/fk/machines',
-               'data/fk/machines/blackjack',
-               'data/fk/machines/keno',
-               'data/fk/machines/poker']
+import sqlite3
 
 
 def main_menu():
+  global connection
   while True:
     print('\n\n\nMain Menu:\n'
           '[0] Four Kings\n'
@@ -40,7 +14,51 @@ def main_menu():
     if user_input == '1':
       btd6()
     if user_input == '.':
+      connection.close()
       exit(0)
+
+
+def fk_view_slots():
+  global cursor
+  print('\n\n\nView Slot Stats:\n'
+        '[0] Big Top Slots\n'
+        '[1] Crazy 8 Slots\n'
+        '[2] Fish N Chips\n'
+        '[3] Gold Rush\n'
+        '[4] Millionaire Manor\n'
+        '[5] Seasonal Slots\n'
+        '[6] Slots in Space\n'
+        '[7] Spinning Cogs\n'
+        '[8] Treasure Trap\n'
+        '[9] Winds of Fortune\n'
+        '[.] Return to Four Kings Menu')
+  user_input = input()
+  if user_input == '0':
+    pass
+  if user_input == '1':
+    pass
+  if user_input == '2':
+    pass
+  if user_input == '3':
+    pass
+  if user_input == '4':
+    pass
+  if user_input == '5':
+    pass
+  if user_input == '6':
+    pass
+  if user_input == '7':
+    pass
+  if user_input == '8':
+    pass
+  if user_input == '9':
+    pass
+  if user_input == '.':
+    return
+
+
+def fk_record_slots():
+  pass
 
 
 def four_kings():
@@ -57,15 +75,19 @@ def four_kings():
     if user_input == '0':
       fk_view_slots()
     if user_input == '1':
-      fk_view_tables()
+      pass
+      # fk_view_tables()
     if user_input == '2':
-      fk_view_machines()
+      pass
+      # fk_view_machines()
     if user_input == '3':
       fk_record_slots()
     if user_input == '4':
-      fk_record_tables()
+      pass
+      # fk_record_tables()
     if user_input == '5':
-      fk_record_machines()
+      pass
+      # fk_record_machines()
     if user_input == '.':
       return
 
@@ -75,12 +97,15 @@ def btd6():
 
 
 def init():
-  for path in DATA_PATHS_:
-    if not os.path.exists(path):
-      os.mkdir(path)
+  global connection, cursor
+  connection = sqlite3.connect('tracked_stats.db')
+  cursor = connection.cursor()
+  cursor.execute('CREATE TABLE IF NOT EXISTS fk_slots(name, lines, spins, bonus, wagered, returned)')
   return
 
 
 if __name__ == '__main__':
+  connection = ''
+  cursor = ''
   init()
   main_menu()
