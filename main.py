@@ -51,6 +51,7 @@ def choose_line_count(_choices, _slot):
   for i in range(len(_choices)):
     menu = menu + '\n[' + str(i) + '] ' + str(_choices[i])
   menu = menu + '\n[.] Return to Slot Selection'
+  print(menu)
   user_input = input()
   if user_input == '.' or user_input == ',':
     return None
