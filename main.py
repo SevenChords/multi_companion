@@ -37,7 +37,7 @@ def print_fk_slot_stats(_stats, _string_preface=''):
                 str(round(_stats[2] / _stats[3], 3)) + '\n')
   if _stats[4] != 0:
     to_print = (to_print + 'Average Spins to encounter a Big Win: ' +
-                str(round(_stats[2] / _stats[3], 3)) + '\n')
+                str(round(_stats[2] / _stats[4], 3)) + '\n')
   if _stats[5] != 0:
     to_print = (to_print + 'Average RTP: ' +
                 str(round(_stats[6] / _stats[5] * 100, 2)) + '%\n')
