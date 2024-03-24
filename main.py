@@ -20,7 +20,7 @@ def main_menu():
 
 def fk_view_slot_stats(_slot=''):
   global cursor
-  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name=?', data=_slot)
+  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name=:slot', {'slot': _slot})
   stats = stats.fetchone()
   if stats is None:
     print('\n\n\n' + _slot + ' has no recorded stats.')
@@ -117,7 +117,7 @@ def fk_view_slots():
 
 def fk_record_slot_stats(_slot=''):
   global cursor, connection
-  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name=?', data=_slot)
+  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name=:slot', {'slot': _slot})
   stats = stats.fetchone()
   if stats is None:
     stats = (_slot, 0, 0, 0, 0, 0, 0)
@@ -150,7 +150,7 @@ def fk_record_slot_stats(_slot=''):
     if user_input == '...' or user_input == ',,,':
       return
     if user_input == '.' or user_input == ',':
-      cursor.execute('DELETE FROM fk_slots WHERE fk_slots.name=?', data=_slot)
+      cursor.execute('DELETE FROM fk_slots WHERE fk_slots.name=:slot', {'slot': _slot})
       connection.commit()
       cursor.execute('INSERT INTO fk_slots VALUES(?, ?, ?, ?, ?, ?, ?)', stats)
       connection.commit()
