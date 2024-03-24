@@ -146,11 +146,11 @@ def fk_record_slots_fish():
       stats[2] -= 1
       undo_bonus = True
       undo_bonus_spin_correction = True
-      user_input.strip('+')
+      user_input = user_input.strip('+')
     elif user_input.startswith('-'):
       stats[3] += 1
       undo_bonus = True
-      user_input.strip('-')
+      user_input = user_input.strip('-')
     else:
       undo_bonus = False
       undo_bonus_spin_correction = False
