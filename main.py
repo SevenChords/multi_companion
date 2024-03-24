@@ -13,7 +13,7 @@ def main_menu():
       four_kings()
     if user_input == '1':
       btd6()
-    if user_input == '.':
+    if user_input == '.' or user_input == ',':
       connection.close()
       exit(0)
 
@@ -80,7 +80,7 @@ def fk_view_slots():
     pass
   if user_input == '9':
     pass
-  if user_input == '.':
+  if user_input == '.' or user_input == ',':
     return
 
 
@@ -116,9 +116,9 @@ def fk_record_slots_fish():
     if stats[2] != 0:
       print_fk_slot_stats(stats, '\nCurrent Stats:\n')
     user_input = input()
-    if user_input == '...':
+    if user_input == '...' or user_input == ',,,':
       return
-    if user_input == '.':
+    if user_input == '.' or user_input == ',':
       cursor.execute('DELETE FROM fk_slots WHERE fk_slots.name="Fish N Chips"')
       connection.commit()
       cursor.execute('INSERT INTO fk_slots VALUES(?, ?, ?, ?, ?, ?, ?)', stats)
@@ -204,7 +204,7 @@ def fk_record_slots():
     pass
   if user_input == '9':
     pass
-  if user_input == '.':
+  if user_input == '.' or user_input == ',':
     return
 
 
@@ -235,7 +235,7 @@ def four_kings():
     if user_input == '5':
       pass
       # fk_record_machines()
-    if user_input == '.':
+    if user_input == '.' or user_input == ',':
       return
 
 
