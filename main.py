@@ -25,12 +25,24 @@ def fk_view_slots_fish():
   if stats is None:
     print('\n\n\nFish N Chips has no recorded stats.')
   else:
-    print('\n\n\nStats for Fish N Chips:\n'
-          'Average Spins for a Bonus: ' + str(round(stats[3] / stats[2] + 1, 3)) + '\n'
-          'Average Spins for a Big Win: ' + str(round(stats[4] / stats[2] + 1, 3)) + '\n'
-          'Average RTP: ' + str(round(float(stats[6]) / float(stats[5]), 3)) + '\n'
-          'Total Spins recorded: ' + str(stats[2]))
+    print_fk_slot_stats(stats, '\n\n\nStats for Fish N Chips:\n')
   _ = input()
+  return
+
+
+def print_fk_slot_stats(_stats, _string_preface=''):
+  to_print = _string_preface
+  if _stats[3] != 0:
+    to_print = (to_print + 'Average Spins to encounter a Bonus: ' +
+                str(round(_stats[2] / _stats[3], 3)) + '\n')
+  if _stats[4] != 0:
+    to_print = (to_print + 'Average Spins to encounter a Big Win: ' +
+                str(round(_stats[2] / _stats[3], 3)) + '\n')
+  if _stats[5] != 0:
+    to_print = (to_print + 'Average RTP: ' +
+                str(round(_stats[6] / _stats[5], 3)) + '\n')
+  to_print = to_print + 'Total Spins recorded: ' + str(_stats[2])
+  print(to_print)
   return
 
 
@@ -101,12 +113,8 @@ def fk_record_slots_fish():
   undo_bonus_spin_correction = False
   undo_return = 0
   while True:
-    if stats[2] != 0 and stats[5] != 0:
-      print('\nCurrent Stats:\n'
-            'Average Spins for a Bonus: ' + str(round(stats[3] / stats[2] + 1, 3)) + '\n'
-            'Average Spins for a Big Win: ' + str(round(stats[4] / stats[2] + 1, 3)) + '\n'
-            'Average RTP: ' + str(round(float(stats[6]) / float(stats[5]), 3)) + '\n'
-            'Total Spins recorded: ' + str(stats[2]))
+    if stats[2] != 0:
+      print_fk_slot_stats(stats, '\nCurrent Stats:\n')
     user_input = input()
     if user_input == '...':
       return
