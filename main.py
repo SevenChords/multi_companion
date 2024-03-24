@@ -47,41 +47,42 @@ def print_fk_slot_stats(_stats, _string_preface=''):
 
 
 def fk_view_slots():
-  print('\n\n\nView Slot Stats:\n'
-        '[0] Big Top Slots\n'
-        '[1] Crazy 8 Slots\n'
-        '[2] Fish N Chips\n'
-        '[3] Gold Rush\n'
-        '[4] Millionaire Manor\n'
-        '[5] Seasonal Slots\n'
-        '[6] Slots in Space\n'
-        '[7] Spinning Cogs\n'
-        '[8] Treasure Trap\n'
-        '[9] Winds of Fortune\n'
-        '[.] Return to Four Kings Menu')
-  user_input = input()
-  if user_input == '0':
-    pass
-  if user_input == '1':
-    pass
-  if user_input == '2':
-    fk_view_slots_fish()
-  if user_input == '3':
-    pass
-  if user_input == '4':
-    pass
-  if user_input == '5':
-    pass
-  if user_input == '6':
-    pass
-  if user_input == '7':
-    pass
-  if user_input == '8':
-    pass
-  if user_input == '9':
-    pass
-  if user_input == '.' or user_input == ',':
-    return
+  while True:
+    print('\n\n\nView Slot Stats:\n'
+          '[0] Big Top Slots\n'
+          '[1] Crazy 8 Slots\n'
+          '[2] Fish N Chips\n'
+          '[3] Gold Rush\n'
+          '[4] Millionaire Manor\n'
+          '[5] Seasonal Slots\n'
+          '[6] Slots in Space\n'
+          '[7] Spinning Cogs\n'
+          '[8] Treasure Trap\n'
+          '[9] Winds of Fortune\n'
+          '[.] Return to Four Kings Menu')
+    user_input = input()
+    if user_input == '0':
+      pass
+    if user_input == '1':
+      pass
+    if user_input == '2':
+      fk_view_slots_fish()
+    if user_input == '3':
+      pass
+    if user_input == '4':
+      pass
+    if user_input == '5':
+      pass
+    if user_input == '6':
+      pass
+    if user_input == '7':
+      pass
+    if user_input == '8':
+      pass
+    if user_input == '9':
+      pass
+    if user_input == '.' or user_input == ',':
+      return
 
 
 def fk_record_slots_fish():
@@ -171,41 +172,42 @@ def fk_record_slots_fish():
 
 
 def fk_record_slots():
-  print('\n\n\nRecord Slot Stats:\n'
-        '[0] Big Top Slots\n'
-        '[1] Crazy 8 Slots\n'
-        '[2] Fish N Chips\n'
-        '[3] Gold Rush\n'
-        '[4] Millionaire Manor\n'
-        '[5] Seasonal Slots\n'
-        '[6] Slots in Space\n'
-        '[7] Spinning Cogs\n'
-        '[8] Treasure Trap\n'
-        '[9] Winds of Fortune\n'
-        '[.] Return to Four Kings Menu')
-  user_input = input()
-  if user_input == '0':
-    pass
-  if user_input == '1':
-    pass
-  if user_input == '2':
-    fk_record_slots_fish()
-  if user_input == '3':
-    pass
-  if user_input == '4':
-    pass
-  if user_input == '5':
-    pass
-  if user_input == '6':
-    pass
-  if user_input == '7':
-    pass
-  if user_input == '8':
-    pass
-  if user_input == '9':
-    pass
-  if user_input == '.' or user_input == ',':
-    return
+  while True:
+    print('\n\n\nRecord Slot Stats:\n'
+          '[0] Big Top Slots\n'
+          '[1] Crazy 8 Slots\n'
+          '[2] Fish N Chips\n'
+          '[3] Gold Rush\n'
+          '[4] Millionaire Manor\n'
+          '[5] Seasonal Slots\n'
+          '[6] Slots in Space\n'
+          '[7] Spinning Cogs\n'
+          '[8] Treasure Trap\n'
+          '[9] Winds of Fortune\n'
+          '[.] Return to Four Kings Menu')
+    user_input = input()
+    if user_input == '0':
+      pass
+    if user_input == '1':
+      pass
+    if user_input == '2':
+      fk_record_slots_fish()
+    if user_input == '3':
+      pass
+    if user_input == '4':
+      pass
+    if user_input == '5':
+      pass
+    if user_input == '6':
+      pass
+    if user_input == '7':
+      pass
+    if user_input == '8':
+      pass
+    if user_input == '9':
+      pass
+    if user_input == '.' or user_input == ',':
+      return
 
 
 def four_kings():
