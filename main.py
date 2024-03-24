@@ -18,8 +18,23 @@ def main_menu():
       exit(0)
 
 
-def fk_view_slots():
+def fk_view_slots_fish():
   global cursor
+  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name="Fish N Chips"')
+  if stats.fetchone() is None:
+    print('\n\n\nFish N Chips has no recorded stats.')
+  else:
+    stats = stats.fetchone()
+    print('\n\n\nStats for Fish N Chips:\n'
+          '\nAverage Spins for a Bonus:\n' + str(stats[3] / stats[2] + 1) + '\n'
+          '\nAverage Spins for a Big Win:\n' + str(stats[4] / stats[2] + 1) + '\n'
+          '\nAverage RTP: ' + str(float(stats[6]) / float(stats[5])) + '\n'
+          '\nTotal Spins recorded: ' + str(stats[2]))
+  _ = input()
+  return
+
+
+def fk_view_slots():
   print('\n\n\nView Slot Stats:\n'
         '[0] Big Top Slots\n'
         '[1] Crazy 8 Slots\n'
@@ -38,7 +53,7 @@ def fk_view_slots():
   if user_input == '1':
     pass
   if user_input == '2':
-    pass
+    fk_view_slots_fish()
   if user_input == '3':
     pass
   if user_input == '4':
@@ -100,7 +115,7 @@ def init():
   global connection, cursor
   connection = sqlite3.connect('tracked_stats.db')
   cursor = connection.cursor()
-  cursor.execute('CREATE TABLE IF NOT EXISTS fk_slots(name, lines, spins, bonus, wagered, returned)')
+  cursor.execute('CREATE TABLE IF NOT EXISTS fk_slots(name, lines, spins, bonus, big_win, wagered, returned)')
   return
 
 
