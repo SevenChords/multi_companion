@@ -18,14 +18,14 @@ def main_menu():
       exit(0)
 
 
-def fk_view_slots_fish():
+def fk_view_slot_stats(_slot=''):
   global cursor
-  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name="Fish N Chips"')
+  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name=?', data=_slot)
   stats = stats.fetchone()
   if stats is None:
-    print('\n\n\nFish N Chips has no recorded stats.')
+    print('\n\n\n' + _slot + ' has no recorded stats.')
   else:
-    print_fk_slot_stats(stats, '\n\n\nStats for Fish N Chips:\n')
+    print_fk_slot_stats(stats, '\n\n\nStats for ' + _slot + ':\n')
   _ = input()
   return
 
@@ -46,6 +46,18 @@ def print_fk_slot_stats(_stats, _string_preface=''):
   return
 
 
+def choose_line_count(_choices, _slot):
+  menu = '\n\n\nChoose line count:'
+  for i in range(len(_choices)):
+    menu = menu + '\n[' + str(i) + '] ' + str(_choices[i])
+  menu = menu + '\n[.] Return to Slot Selection'
+  user_input = input()
+  if user_input == '.' or user_input == ',':
+    return None
+  else:
+    return _slot + ' ' + str(_choices[int(user_input)])
+
+
 def fk_view_slots():
   while True:
     print('\n\n\nView Slot Stats:\n'
@@ -62,35 +74,53 @@ def fk_view_slots():
           '[.] Return to Four Kings Menu')
     user_input = input()
     if user_input == '0':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Big Top Slots')
+      if slot is None:
+        continue
+      fk_view_slot_stats(slot)
     if user_input == '1':
-      pass
+      slot = choose_line_count([8, 18, 28, 38, 88], 'Crazy 8 Slots')
+      if slot is None:
+        continue
+      fk_view_slot_stats(slot)
     if user_input == '2':
-      fk_view_slots_fish()
+      fk_view_slot_stats('Fish N Chips')
     if user_input == '3':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Gold Rush')
+      if slot is None:
+        continue
+      fk_view_slot_stats(slot)
     if user_input == '4':
-      pass
+      slot = choose_line_count([5, 10, 15, 20, 25], 'Millionaire Manor')
+      if slot is None:
+        continue
+      fk_view_slot_stats(slot)
     if user_input == '5':
-      pass
+      fk_view_slot_stats('Seasonal Slots')
     if user_input == '6':
-      pass
+      fk_view_slot_stats('Slots in Space')
     if user_input == '7':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Spinning Cogs')
+      if slot is None:
+        continue
+      fk_view_slot_stats(slot)
     if user_input == '8':
-      pass
+      fk_view_slot_stats('Treasure Trap')
     if user_input == '9':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Winds of Fortune')
+      if slot is None:
+        continue
+      fk_view_slot_stats(slot)
     if user_input == '.' or user_input == ',':
       return
 
 
-def fk_record_slots_fish():
+def fk_record_slot_stats(_slot=''):
   global cursor, connection
-  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name="Fish N Chips"')
+  stats = cursor.execute('SELECT * FROM fk_slots WHERE fk_slots.name=?', data=_slot)
   stats = stats.fetchone()
   if stats is None:
-    stats = ("Fish N Chips", 0, 0, 0, 0, 0, 0)
+    stats = (_slot, 0, 0, 0, 0, 0, 0)
   stats = [stats[0],
            int(stats[1]),
            int(stats[2]),
@@ -98,7 +128,7 @@ def fk_record_slots_fish():
            int(stats[4]),
            int(stats[5]),
            int(stats[6])]
-  bet = int(input('\n\n\nEnter bet for this recording session: '))
+  bet = int(input('\n\n\nEnter total bet for this recording session: '))
   print('Enter the return you got from a spin to record it.\n'
         'Empty input will be recorded as 0 return.\n'
         'A "+" before the input signifies a bonus that is recorded '
@@ -120,7 +150,7 @@ def fk_record_slots_fish():
     if user_input == '...' or user_input == ',,,':
       return
     if user_input == '.' or user_input == ',':
-      cursor.execute('DELETE FROM fk_slots WHERE fk_slots.name="Fish N Chips"')
+      cursor.execute('DELETE FROM fk_slots WHERE fk_slots.name=?', data=_slot)
       connection.commit()
       cursor.execute('INSERT INTO fk_slots VALUES(?, ?, ?, ?, ?, ?, ?)', stats)
       connection.commit()
@@ -187,25 +217,43 @@ def fk_record_slots():
           '[.] Return to Four Kings Menu')
     user_input = input()
     if user_input == '0':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Big Top Slots')
+      if slot is None:
+        continue
+      fk_record_slot_stats(slot)
     if user_input == '1':
-      pass
+      slot = choose_line_count([8, 18, 28, 38, 88], 'Crazy 8 Slots')
+      if slot is None:
+        continue
+      fk_record_slot_stats(slot)
     if user_input == '2':
-      fk_record_slots_fish()
+      fk_record_slot_stats('Fish N Chips')
     if user_input == '3':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Gold Rush')
+      if slot is None:
+        continue
+      fk_record_slot_stats(slot)
     if user_input == '4':
-      pass
+      slot = choose_line_count([5, 10, 15, 20, 25], 'Millionaire Manor')
+      if slot is None:
+        continue
+      fk_record_slot_stats(slot)
     if user_input == '5':
-      pass
+      fk_record_slot_stats('Seasonal Slots')
     if user_input == '6':
-      pass
+      fk_record_slot_stats('Slots in Space')
     if user_input == '7':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Spinning Cogs')
+      if slot is None:
+        continue
+      fk_record_slot_stats(slot)
     if user_input == '8':
-      pass
+      fk_record_slot_stats('Treasure Trap')
     if user_input == '9':
-      pass
+      slot = choose_line_count([25, 50, 75, 100], 'Winds of Fortune')
+      if slot is None:
+        continue
+      fk_record_slot_stats(slot)
     if user_input == '.' or user_input == ',':
       return
 
