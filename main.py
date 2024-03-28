@@ -50,7 +50,7 @@ def osu():
       cursor.execute('DELETE FROM osu_scores')
       connection.commit()
       for score in scores:
-        cursor.execute('INSERT INTO osu_scores VALUES(?)', score)
+        cursor.execute('INSERT INTO osu_scores VALUES(?)', (score,))
       connection.commit()
       return
     new_score = int(user_input)
@@ -339,7 +339,6 @@ def init():
   connection = sqlite3.connect('tracked_stats.db')
   cursor = connection.cursor()
   cursor.execute('CREATE TABLE IF NOT EXISTS fk_slots(name, lines, spins, bonus, big_win, wagered, returned)')
-  cursor.execute('DROP TABLE osu_scores')
   cursor.execute('CREATE TABLE IF NOT EXISTS osu_scores(pp INT)')
   return
 
