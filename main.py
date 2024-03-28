@@ -339,7 +339,8 @@ def init():
   connection = sqlite3.connect('tracked_stats.db')
   cursor = connection.cursor()
   cursor.execute('CREATE TABLE IF NOT EXISTS fk_slots(name, lines, spins, bonus, big_win, wagered, returned)')
-  cursor.execute('CREATE TABLE IF NOT EXISTS osu_scores(pp)')
+  cursor.execute('DROP TABLE osu_scores')
+  cursor.execute('CREATE TABLE IF NOT EXISTS osu_scores(pp INT)')
   return
 
 
