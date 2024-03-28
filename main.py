@@ -7,15 +7,55 @@ def main_menu():
     print('\n\n\nMain Menu:\n'
           '[0] Four Kings\n'
           '[1] BTD6\n'
+          '[2] osu! resettable PP tracker\n'
           '[.] Quit')
     user_input = input()
     if user_input == '0':
       four_kings()
     if user_input == '1':
       btd6()
+    if user_input == '2':
+      osu()
     if user_input == '.' or user_input == ',':
       connection.close()
       exit(0)
+
+
+def osu():
+  global cursor, connection
+  scores = cursor.execute('SELECT * FROM osu_scores ORDER BY osu_scores.pp DESC')
+  scores = scores.fetchall()
+  if scores is None:
+    scores = [0]
+  print('\n\n\nEnter the PP you get from each Play you want to record.\n'
+        'Enter "." to return to the Main Menu and store the PP values recorded this session.\n'
+        'Enter "..." to return to the Main Menu without storing the PP values recorded this session.\n'
+        'Enter "--" to reset all recorded PP values and return to the Main Menu. This cannot be undone.')
+  while True:
+    pp = 0
+    for n in range(len(scores)):
+      score_value = int(scores[n] * (0.95 ** n))
+      if score_value == 0:
+        scores.pop(n)
+      pp += score_value
+    print('\nCurrent PP: ' + str(pp))
+    user_input = input()
+    if user_input == '--':
+      cursor.execute('DELETE FROM osu_scores')
+      connection.commit()
+      return
+    if user_input == '.':
+      return
+    if user_input == '...':
+      cursor.execute('DELETE FROM osu_scores')
+      connection.commit()
+      for score in scores:
+        cursor.execute('INSERT INTO osu_scores VALUES(?)', score)
+      connection.commit()
+      return
+    new_score = int(user_input)
+    scores.append(new_score)
+    scores.sort(reverse=True)
 
 
 def fk_view_slot_stats(_slot=''):
@@ -299,6 +339,7 @@ def init():
   connection = sqlite3.connect('tracked_stats.db')
   cursor = connection.cursor()
   cursor.execute('CREATE TABLE IF NOT EXISTS fk_slots(name, lines, spins, bonus, big_win, wagered, returned)')
+  cursor.execute('CREATE TABLE IF NOT EXISTS osu_scores(pp)')
   return
 
 
