@@ -25,6 +25,8 @@ def osu():
   global cursor, connection
   scores = cursor.execute('SELECT * FROM osu_scores ORDER BY osu_scores.pp DESC')
   scores = list(scores.fetchall())
+  for n in range(len(scores)):
+    scores[n] = int(scores[n][0])
   if scores is None:
     scores = [0]
   print('\n\n\nEnter the PP you get from each Play you want to record.\n'
