@@ -44,9 +44,9 @@ def osu():
       cursor.execute('DELETE FROM osu_scores')
       connection.commit()
       return
-    if user_input == '.':
+    if user_input == '.' or user_input == ',':
       return
-    if user_input == '...':
+    if user_input == '...' or user_input == ',,,':
       cursor.execute('DELETE FROM osu_scores')
       connection.commit()
       for score in scores:
