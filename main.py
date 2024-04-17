@@ -16,16 +16,14 @@ def generate_menu(_title, _items, _returns, _last_page=1):
   while True:
     prev_page = False
     next_page = False
-    cancel = False
     to_print = '\n\n\n' + _title + '\n'
     if current_page > 1:
       to_print = to_print + '[-] Previous page\n'
       prev_page = True
-    if current_page == pages:
+    if current_page == pages and len(_items) % 10 != 0:
       for i in range(len(_items) % 10):
         to_print = to_print + '[' + str(i) + '] ' + _items[(current_page - 1) * 10 + i] + '\n'
       to_print = to_print + '[.] End Selection'
-      cancel = True
     else:
       for i in range(10):
         to_print = to_print + '[' + str(i) + '] ' + _items[(current_page - 1) * 10 + i] + '\n'
@@ -113,6 +111,38 @@ def lol_add_champs_to_position(_position):
     champion_names.remove(to_add)
 
 
+def lol_remove_champs_from_position(_position):
+  global connection, cursor
+  table = 'lol_' + _position + '_champs'
+  title = ''
+  if _position == 'top':
+    title = 'Toplane'
+  if _position == 'jungle':
+    title = 'Jungle'
+  if _position == 'mid':
+    title = 'Midlane'
+  if _position == 'bot':
+    title = 'Botlane'
+  if _position == 'support':
+    title = 'Support'
+  added = cursor.execute('SELECT * FROM {}'.format(table))
+  added = added.fetchall()
+  if added is None:
+    return
+  champ_names = []
+  for champ in added:
+    champ_names.append(champ[0])
+  last_page = 1
+  while True:
+    to_remove, last_page = generate_menu('Choose Champions to remove from ' + title + ' Champion Pool:', champ_names,
+                                         champ_names, last_page)
+    if to_remove is None:
+      return
+    cursor.execute('DELETE FROM {} WHERE {}.champ=:champ'.format(table, table), {'champ': to_remove})
+    connection.commit()
+    champ_names.remove(to_remove)
+
+
 def lol_add_champions():
   while True:
     position = 'none'
@@ -138,6 +168,33 @@ def lol_add_champions():
       position = 'support'
     if position != 'none':
       lol_add_champs_to_position(position)
+
+
+def lol_remove_champions():
+  while True:
+    position = 'none'
+    print('\n\n\nChoose Position to remove from:\n'
+          '[0] Toplane\n'
+          '[1] Jungle\n'
+          '[2] Midlane\n'
+          '[3] Botlane\n'
+          '[4] Support\n'
+          '[.] Back to League of Legends Menu')
+    user_input = input()
+    if user_input == '.' or user_input == ',':
+      return
+    if user_input == '0':
+      position = 'top'
+    if user_input == '1':
+      position = 'jungle'
+    if user_input == '2':
+      position = 'mid'
+    if user_input == '3':
+      position = 'bot'
+    if user_input == '4':
+      position = 'support'
+    if position != 'none':
+      lol_remove_champs_from_position(position)
 
 
 def lol_position_select(_suggestion_basis):
@@ -375,15 +432,18 @@ def lol():
           '[0] Suggestions based on best winrate\n'
           '[1] Suggestions based on least games played\n'
           '[2] Random suggestions\n'
-          '[3] Add champions to selection\n'
-          '[4] Manually add Results\n'
+          '[3] Manually add Results\n'
+          '[4] Add Champions to Champion Pool\n'
+          '[5] Remove Champions from Champion Pool\n'
           '[.] Back to main menu')
     user_input = input()
     if user_input == '.' or user_input == ',':
       return
-    if user_input == '3':
-      lol_add_champions()
     if user_input == '4':
+      lol_add_champions()
+    if user_input == '5':
+      lol_remove_champions()
+    if user_input == '3':
       lol_manual_result_recording()
     if user_input == '0':
       suggestion_basis = 'winrate'
